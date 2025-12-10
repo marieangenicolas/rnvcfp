@@ -62,7 +62,7 @@ Pod::Spec.new do |s|
   s.subspec 'Core' do |core|
     # VisionCamera Core Swift codebase
     core.source_files = [
-      "ios/Core/**/*.swift"
+      "ios/Core/**/*.swift",
     ]
 
     core.pod_target_xcconfig = {
@@ -75,6 +75,7 @@ Pod::Spec.new do |s|
     core.source_files = [
       "ios/React/**/*.swift",
       "ios/React/**/*.{h,m}",
+      "ios/React/**/*.metal",
     ]
     core.public_header_files = [
       "ios/React/CameraBridge.h"
