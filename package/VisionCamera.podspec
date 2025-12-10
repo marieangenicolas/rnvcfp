@@ -75,7 +75,6 @@ Pod::Spec.new do |s|
     core.source_files = [
       "ios/React/**/*.swift",
       "ios/React/**/*.{h,m}",
-      "ios/React/**/*.metal",
     ]
     core.public_header_files = [
       "ios/React/CameraBridge.h"
