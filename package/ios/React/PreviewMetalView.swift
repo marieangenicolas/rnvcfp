@@ -147,6 +147,7 @@ private func setupTransform(width: Int, height: Int, mirroring: Bool, rotation: 
 
   if textureMirroring {
     scaleX *= -1.0
+    scaleY *= -1.0
   }
 
   // Vertex coordinate takes the gravity into account.
