@@ -35,7 +35,7 @@ func allocateOutputBufferPool(with inputFormatDescription: CMFormatDescription, 
     outputFormatDescription: CMFormatDescription?) {
         
         let inputMediaSubType = CMFormatDescriptionGetMediaSubType(inputFormatDescription)
-        if inputMediaSubType != kCVPixelFormatType_32BGRA {
+        if(inputMediaSubType != kCVPixelFormatType_32BGRA && inputMediaSubType != kCVPixelFormatType_Lossy_32BGRA) {
             assertionFailure("Invalid input pixel buffer type \(inputMediaSubType)")
             return (nil, nil, nil)
         }
