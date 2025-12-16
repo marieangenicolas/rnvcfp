@@ -1,7 +1,7 @@
 {
   "name": "@marieangenicolas/rnvcfp",
-  "version": "1.0.0",
-  "description": " ",
+  "version": "1.2.0",
+  "description": "null",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
@@ -57,6 +57,7 @@
   "bugs": {
     "url": "https://github.com/mrousavy/react-native-vision-camera/issues"
   },
+  "homepage": "https://react-native-vision-camera.com/",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
