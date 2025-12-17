@@ -102,6 +102,12 @@ extension CameraSession {
 
       // 1. Add
       let videoOutput = AVCaptureVideoDataOutput()
+
+       // ✅ ADD THIS: Force BGRA pixel format
+      videoOutput.videoSettings = [
+        kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)
+      ]
+
       guard captureSession.canAddOutput(videoOutput) else {
         throw CameraError.parameter(.unsupportedOutput(outputDescriptor: "video-output"))
       }

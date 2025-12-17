@@ -35,10 +35,24 @@ func allocateOutputBufferPool(with inputFormatDescription: CMFormatDescription, 
     outputFormatDescription: CMFormatDescription?) {
         
         let inputMediaSubType = CMFormatDescriptionGetMediaSubType(inputFormatDescription)
-        if(inputMediaSubType != kCVPixelFormatType_32BGRA && inputMediaSubType != kCVPixelFormatType_Lossy_32BGRA) {
+
+         // Support both BGRA and YUV formats
+        let supportedFormats: [OSType] = [
+            kCVPixelFormatType_32BGRA,
+            kCVPixelFormatType_Lossy_32BGRA,
+            kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange,
+            kCVPixelFormatType_420YpCbCr8BiPlanarFullRange
+        ]
+        
+        if !supportedFormats.contains(inputMediaSubType) {
             assertionFailure("Invalid input pixel buffer type \(inputMediaSubType)")
             return (nil, nil, nil)
         }
+
+        // if(inputMediaSubType != kCVPixelFormatType_32BGRA && inputMediaSubType != kCVPixelFormatType_Lossy_32BGRA) {
+        //     assertionFailure("Invalid input pixel buffer type \(inputMediaSubType)")
+        //     return (nil, nil, nil)
+        // }
         
         let inputDimensions = CMVideoFormatDescriptionGetDimensions(inputFormatDescription)
         var pixelBufferAttributes: [String: Any] = [
