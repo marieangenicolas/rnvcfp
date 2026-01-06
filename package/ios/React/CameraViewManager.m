@@ -31,6 +31,7 @@ RCT_EXPORT_VIEW_PROPERTY(enablePortraitEffectsMatteDelivery, BOOL);
 RCT_EXPORT_VIEW_PROPERTY(enableBufferCompression, BOOL);
 RCT_EXPORT_VIEW_PROPERTY(isMirrored, BOOL);
 RCT_EXPORT_VIEW_PROPERTY(lutAsset, NSDictionary);
+RCT_EXPORT_VIEW_PROPERTY(fisheye, BOOL)
 
 // use cases
 RCT_EXPORT_VIEW_PROPERTY(preview, BOOL);

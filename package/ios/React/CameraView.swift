@@ -83,6 +83,8 @@ public final class CameraView: UIView, CameraSessionDelegate, PreviewViewDelegat
     }
   }
   
+  @objc var fisheye = false
+  
   // props that require format reconfiguring
   @objc var format: NSDictionary?
   @objc var minFps: NSNumber?
@@ -323,6 +325,11 @@ public final class CameraView: UIView, CameraSessionDelegate, PreviewViewDelegat
     if changedProps.contains("zoom") {
       pinchScaleOffset = zoom.doubleValue
     }
+      
+    if let previewMetalView = previewMetalView {
+        previewMetalView.fisheye = self.fisheye
+
+    }
     
     // Prevent phone from going to sleep
     UIApplication.shared.isIdleTimerDisabled = isActive
@@ -456,7 +463,7 @@ public final class CameraView: UIView, CameraSessionDelegate, PreviewViewDelegat
     
     // Notify FPS Collector that we just had a Frame
     fpsSampleCollector.onTick()
-    
+      
     // Only update Metal view if it exists (i.e., when using LUT)
     if let previewMetalView = previewMetalView {
       DispatchQueue.main.async {
@@ -489,7 +496,7 @@ public final class CameraView: UIView, CameraSessionDelegate, PreviewViewDelegat
         }
         
         // Send the pixel buffer through the filter
-        guard let filteredBuffer = filter.render(pixelBuffer: finalVideoPixelBuffer) else {
+        guard let filteredBuffer = filter.render(pixelBuffer: finalVideoPixelBuffer,fisheye: self.fisheye) else {
           print("Unable to filter video buffer")
           return
         }
