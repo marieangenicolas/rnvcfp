@@ -29,6 +29,7 @@ extension AVCaptureDevice {
       "supportsRawCapture": false, // TODO: supportsRawCapture
       "supportsLowLightBoost": isLowLightBoostSupported,
       "supportsFocus": isFocusPointOfInterestSupported,
+      "supportsTemperatureAndTint": isLockingWhiteBalanceWithCustomDeviceGainsSupported,
       "hardwareLevel": HardwareLevel.full.jsValue,
       "sensorOrientation": sensorOrientation.jsValue,
       "formats": formats.map { $0.toJSValue() },
