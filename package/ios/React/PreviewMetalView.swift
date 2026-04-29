@@ -125,11 +125,12 @@ class PreviewMetalView: MTKView {
         var scaleY: Float = 1.0
         var resizeAspect: Float = 1.0
         
-        let smallerSide = min(width,height)
-        
         internalBounds = self.bounds
-        textureWidth = fisheyeF ?  smallerSide : width
-        textureHeight = fisheyeF ? smallerSide : height
+        // Always use the texture's real dimensions. The fisheye kernel writes
+        // a true circle into a rectangular texture (with black bars on the
+        // longer side); "contain" fit below keeps that circle circular on screen.
+        textureWidth = width
+        textureHeight = height
         textureMirroring = mirroring
         textureRotation = rotation
         
@@ -145,19 +146,23 @@ class PreviewMetalView: MTKView {
             }
         }
         
-        // Resize aspect ratio: use max to emulate "cover" (fills view, cropping the texture if necessary)
-        resizeAspect = max(scaleX, scaleY)
-        
-        if(fisheyeF){
+        if fisheyeF {
+            // "contain" / letterbox: the smaller raw scale is the applied scale
+            // so the full circular disc is visible (with letterbox bars on the
+            // longer dimension). resizeAspect must match for touch-coordinate
+            // mapping.
+            resizeAspect = min(scaleX, scaleY)
             if scaleX < scaleY {
                 scaleY = scaleX / scaleY
-                scaleX = 1
+                scaleX = 1.0
             } else {
                 scaleX = scaleY / scaleX
-                scaleY = 1
+                scaleY = 1.0
             }
-        }
-        else{
+        } else {
+            // "cover": the larger raw scale is the applied scale so the preview
+            // fills the view, cropping the other axis if necessary.
+            resizeAspect = max(scaleX, scaleY)
             if scaleX > scaleY {
                 // width dominates -> scaleX is the constraining factor; keep X = 1.0 and shrink Y relative to X
                 scaleY = scaleX / scaleY
@@ -167,7 +172,6 @@ class PreviewMetalView: MTKView {
                 scaleX = scaleY / scaleX
                 scaleY = 1.0
             }
-            
         }
         
         
